@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #888
+}
+
+.container__app {
+    background: #ff0000;
+    position: relative;
+}
+
+.app {
+    position: relative;
+    width: 100%;
+}
+
+.container__panels {
+    position: relative;
+    display: flex;
+    background: #222;
+}
+
+.progress__bar {
+    height: 5px;
+    width: 100%;
+    background: #000;
+}
+
+.progress__bar__percentage {
+    background: green;
+    width: 0%;
+    height: 100%;
+}
+
+.left__panel {
+    position: relative;
+    margin: 10px 0 0 0;
+    background: #333;
+    height: 100vh;
+    width: 35%;
+    text-align: center;
+}
+
+.cover {
+    margin-top: 10%;
+}
+
+.cover__image {
+    width: 50%;
+    height: auto;
+}
+
+.title__player {
+    margin-top: 1rem;
+}
+
+.songs__counter {
+    margin-top: 1rem;
+}
+
+.play__button {
+    margin-top: 1rem;
+}
+
+.play__button:hover {
+    cursor: pointer;
+}
+
+.right__panel {
+    position: relative;
+    background: #555;
+    height: 100vh;
+    width: 65%;
+    margin: 10px 0 0 0;
+}
+
+.play__module {
+    /* height: 10rem; */
+    width: 100%;
+    background: #111;
+    /* padding-top: 1px;
+    padding-bottom: 1px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.play__module__content {
+    margin: 0.5rem;
+    height: 3rem;
+    background: #888;
+    display: flex;
+    width: 100%;
+}
+
+.play__button__right {
+    position: relative;
+    width: 5%;
+    background: #000055;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.play__button__right:hover {background-color: white
+}
+
+.title__area {
+    position: relative;
+    width: 80%;
+    background: #330055;
+    display: flex;
+    align-items: center;
+}
+
+.title__content {}
+}
+
+.title__album {}
+
+.title__song {}
+
+.song__duration {
+    width: 20%;
+    background: #003300;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+.playmodulemouseoverbackground {background: #f00;}
