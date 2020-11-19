@@ -11,7 +11,7 @@ import {
   progressBar
 } from '/js/dom.js'
 
-// Left panel
+// Left panel   ssdf
 
 songsCounterEl.innerHTML = `${songsArr.length} songs`;
 
