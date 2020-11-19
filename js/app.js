@@ -5,7 +5,7 @@ import {
 import {
   // coverEl,
   songsCounterEl,
-  // playButtonLeftEl,
+  playButtonLeftEl,
   rightPanel,
   progressBarPercentage,
   // progressBar
@@ -54,7 +54,6 @@ function Module() {
     titleContentEl.appendChild(titleSongEl);
     this.playModuleEl.appendChild(songDurationEl);
 
-
     titleAlbumEl.innerHTML = `${songsArr[songId]["title"]}`
     titleSongEl.innerHTML = `${songsArr[songId]["artist"]}`
     songDurationEl.innerHTML = `${songsArr[songId]["time"]}`
@@ -86,3 +85,7 @@ for (let i = 0; i < songsArr.length; i++) {
   module.playModuleRender(i);
   module.play(module.audioEl, module.timerInterval);
 }
+
+playButtonLeftEl.addEventListener("click", function() {
+  
+})
