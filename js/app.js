@@ -1,84 +1,165 @@
-import {songsArr} from '/js/songs.js'
+//import of songs array and DOM cache
+import {
+  songsArr
+} from '/js/songs.js'
+import {
+  coverEl,
+  songsCounterEl,
+  playButtonLeftEl,
+  rightPanel,
+  progressBarPercentage,
+  progressBar
+} from '/js/dom.js'
 
-// caching the DOM
-
-const coverEl = document.querySelector(".cover__image");
-const songsCounterEl = document.querySelector(".songs__counter");
-const playButtonLeftEl = document.querySelector(".play__button");
-const titleAlbumEl = document.querySelector(".title__album");
-const titleSongEl = document.querySelector(".title__song");
-const songDuration = document.querySelector(".song__duration");
-const rightPanel = document.querySelector(".right__panel");
-const progressBarPercentage = document.querySelector(".progress__bar__percentage");
-const progressBar = document.querySelector(".progress__bar");
-
-// Objects and methods
+// Left panel
 
 songsCounterEl.innerHTML = `${songsArr.length} songs`;
 
-// GENERATING PLAYER MODULE
+// Song module constructor
 
-const createModule = (playModule, song) => {
-
-  playModule.innerHTML = `
-<div class="play__module__content">
-  <div class="play__button__right">
+function Module(songId) {
+  this.playbuttonrightEl = `<div class="play__button__right" id="playbuttonright${songId}">`
+  this.audioHTMLEl = `<audio src="${songsArr[songId]["url"]}"></audio>`
+  this.html = `
+  <div class="play__module__content" id="playmodule${songId}">
+  ${this.playbuttonrightEl}
       &#9658;
-      <audio src="${song["url"]}"></audio>
+      ${this.audioHTMLEl}
   </div>
   <div class="title__area">
     <div class="title__content">
-      <p class="title__album">${song["title"]}</p>
-      <p class="title__song">${song["artist"]}</p>
+      <p class="title__album">${songsArr[songId]["title"]}</p>
+      <p class="title__song">${songsArr[songId]["artist"]}</p>
     </div>
   </div>
-  <div class="song__duration">${song["time"]}</div>
-</div>`
+  <div class="song__duration">${songsArr[songId]["time"]}</div>
+</div>
+  `
 }
 
+Module.prototype.chosen = () => {}
+Module.prototype.play = () => {}
 
-// GENERATING PLAYLIST
+// Playlist (Song modules) generator
 
-const renderPlaylistModule = () => {
+let playlistArr = []
+let playlistHTML = ''
 
-  for (let elem of song) {
-    rightPanel.innerHTML += `<div class="play__module" id="play__module__${elem["id"]}">    </div>`
-    let playModule = document.querySelector(`#play__module__${elem["id"]}`);
-    createModule(playModule, elem);
+for (let i = 0; i < songsArr.length; i++) {
+  let module = new Module(i);
+  playlistArr.push(module);
+  playlistHTML += module["html"];
+}
+
+rightPanel.innerHTML = `${playlistHTML}`
+
+// PLAY ACTION
+
+for (let elem of playlistArr) {
+console.log(elem.playbuttonrightEl);
+
+// elem.playbuttonrightEl.addEventListener("mouseover", function() {console.log(elem)})
+}
+
+// const playButtonRightEl = document.querySelector(".play__button__right");
+// const playButtons = document.querySelectorAll(".play__button__right");
+
+// let chosenSong;
+// let timerInterval;
+
+// const playButtonsArr = []
+// const play = (elem) => {
+//   let audioEl = elem.firstElementChild;
+//   if (audioEl.paused) {
+//     audioEl.play();
+//     // timerInterval = setInterval(function () {
+//     // progressBarPercentage.style.width = `${audioEl.currentTime / audioEl.duration * 100}%`;
+//     // }, 10);
+
+//   } else {
+//     audioEl.pause();
+//     // clearInterval(timerInterval);
+//   }
+// }
+/* 
+const playbuttons = () => {
+
+  for (let elem of playButtons) {
+    playButtonsArr.push(elem);
+    elem.addEventListener("click",
+
+      function () {
+
+        let audioEl = elem.firstElementChild;
+        if (audioEl.paused) {
+          audioEl.play();
+          timerInterval = setInterval(function () {
+            progressBarPercentage.style.width = `${audioEl.currentTime / audioEl.duration * 100}%`;
+          }, 10);
+
+        } else {
+          audioEl.pause();
+          clearInterval(timerInterval);
+        }
+      })
   }
 }
 
-renderPlaylistModule();
+playbuttons(); */
 
-const playButtonRightEl = document.querySelector(".play__button__right");
+//   let audioEl = elem.firstElementChild;
+//   progressBarPercentage.style.width = `songId`;
+//   elem.addEventListener("click", function () {
+
+//     if (audioEl.paused) {
+//       audioEl.play();
+//       timerInterval = setInterval(function () {
+//         progressBarPercentage.style.width = `${audioEl.currentTime / audioEl.duration * 100}%`;
+//       }, 10);
+
+//     } else {
+//       audioEl.pause();
+//       clearInterval(timerInterval);
+//     }
+//   })
+
+//   playButtonLeftEl.addEventListener("click", function () {
+
+//     if (audioEl.paused) {
+//       audioEl.play();
+//       timerInterval = setInterval(function () {
+//         progressBarPercentage.style.width = `${audioEl.currentTime / audioEl.duration * 100}%`;
+//       }, 10);
+
+//     } else {
+//       audioEl.pause();
+//       clearInterval(timerInterval);
+//     }
+//   })
+
+
+
+// }
+
+
+
+
+
+/* // PLAY ACTION
+
+// const playButtonRightEl = document.querySelector(".play__button__right");
 const playButtons = document.querySelectorAll(".play__button__right");
-// const playModule = document.querySelectorAll(".play__module");
 
-
-
-// PLAY ACTION
-let chosenSong;
+// let chosenSong;
 let timerInterval;
 
 const play = () => {
 
   for (let elem of playButtons) {
-    
-/*     let playModule = elem.parentElement.parentElement;
-    console.log(playModule);
 
-    playModule.addEventListener("mouseover", function() {
-      playModule.classList.toggle("playmodulemouseoverbackground");
-    })    
-    playModule.addEventListener("mouseout", function() {
-      playModule.classList.toggle("playmodulemouseoverbackground");
-    })   
-    playModule.addEventListener("click", function() {
-      console.log("clicked");
-    }) */
 
     let audioEl = elem.firstElementChild;
-    progressBarPercentage.style.width = `0px`;
+    progressBarPercentage.style.width = `songId`;
     elem.addEventListener("click", function () {
 
       if (audioEl.paused) {
@@ -112,5 +193,4 @@ const play = () => {
   }
 }
 
-play();
-
+play(); */
