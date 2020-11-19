@@ -3,28 +3,35 @@ import {
   songsArr
 } from '/js/songs.js'
 import {
-  coverEl,
+  // coverEl,
   songsCounterEl,
-  playButtonLeftEl,
+  // playButtonLeftEl,
   rightPanel,
-  progressBarPercentage,
-  progressBar
+  // progressBarPercentage,
+  // progressBar
 } from '/js/dom.js'
 
-// Left panel   ssdf
+// Left panel
 
 songsCounterEl.innerHTML = `${songsArr.length} songs`;
 
 // Song module constructor
 
-function Module(songId) {
-  this.playbuttonrightEl = `<div class="play__button__right" id="playbuttonright${songId}">`
-  this.audioHTMLEl = `<audio src="${songsArr[songId]["url"]}"></audio>`
-  this.html = `
-  <div class="play__module__content" id="playmodule${songId}">
-  ${this.playbuttonrightEl}
-      &#9658;
-      ${this.audioHTMLEl}
+const playModuleEl = document.createElement("div");
+const playButtonRight = document.createElement("div");
+const audioEl = document.createElement("audio");
+const titleAreaEl = document.createElement("div");
+const titleContentEl = document.createElement("div");
+const titleAlbumEl = document.createElement("p");
+const titleSongEl = document.createElement("p");
+const songDurationEl = document.createElement("div");
+
+/* 
+
+<div class="play__module__content" id="playmodule${songId}">
+  <div class="play__button__right" id="playbuttonright${songId}">
+    &#9658;
+    <audio src="${songsArr[songId]["url"]}"></audio>
   </div>
   <div class="title__area">
     <div class="title__content">
@@ -33,8 +40,40 @@ function Module(songId) {
     </div>
   </div>
   <div class="song__duration">${songsArr[songId]["time"]}</div>
-</div>
-  `
+</div> 
+
+*/
+
+function Module(songId) {
+
+  this.playModuleRender = function () {
+
+    playModuleEl.classList.add("play__module__content");
+    playModuleEl.setAttribute("id", `playmodule${songId}`);
+    playButtonRight.classList.add("play__button__right");
+    playButtonRight.setAttribute("id", `playbuttonright${songId}`)
+    audioEl.setAttribute("src", `${songId}`)
+    titleAreaEl.classList.add("title__area");
+    titleContentEl.classList.add("title__content");
+    titleAlbumEl.classList.add("title__album");
+    titleSongEl.classList.add("title__song");
+    songDurationEl.classList.add("song__duration");
+
+    rightPanel.appendChild(playModuleEl);
+    playModuleEl.appendChild(playButtonRight);
+    playButtonRight.appendChild(audioEl);
+    playModuleEl.appendChild(titleAreaEl);
+    titleAreaEl.appendChild(titleContentEl);
+    titleContentEl.appendChild(titleAlbumEl);
+    titleContentEl.appendChild(titleSongEl);
+    playModuleEl.appendChild(songDurationEl);
+
+    playButtonRight.innerHTML = "&#9658;";
+    titleAlbumEl.innerHTML = `${songsArr[songId]["title"]}`
+    titleSongEl.innerHTML = `${songsArr[songId]["artist"]}`
+    songDurationEl.innerHTML = `${songsArr[songId]["time"]}`
+
+  }
 }
 
 Module.prototype.chosen = () => {}
@@ -47,150 +86,9 @@ let playlistHTML = ''
 
 for (let i = 0; i < songsArr.length; i++) {
   let module = new Module(i);
-  playlistArr.push(module);
-  playlistHTML += module["html"];
+  module.playModuleRender();
 }
 
-rightPanel.innerHTML = `${playlistHTML}`
+// rightPanel.innerHTML = `${playlistHTML}`
 
-// PLAY ACTION
-
-for (let elem of playlistArr) {
-console.log(elem.playbuttonrightEl);
-
-// elem.playbuttonrightEl.addEventListener("mouseover", function() {console.log(elem)})
-}
-
-// const playButtonRightEl = document.querySelector(".play__button__right");
-// const playButtons = document.querySelectorAll(".play__button__right");
-
-// let chosenSong;
-// let timerInterval;
-
-// const playButtonsArr = []
-// const play = (elem) => {
-//   let audioEl = elem.firstElementChild;
-//   if (audioEl.paused) {
-//     audioEl.play();
-//     // timerInterval = setInterval(function () {
-//     // progressBarPercentage.style.width = `${audioEl.currentTime / audioEl.duration * 100}%`;
-//     // }, 10);
-
-//   } else {
-//     audioEl.pause();
-//     // clearInterval(timerInterval);
-//   }
-// }
-/* 
-const playbuttons = () => {
-
-  for (let elem of playButtons) {
-    playButtonsArr.push(elem);
-    elem.addEventListener("click",
-
-      function () {
-
-        let audioEl = elem.firstElementChild;
-        if (audioEl.paused) {
-          audioEl.play();
-          timerInterval = setInterval(function () {
-            progressBarPercentage.style.width = `${audioEl.currentTime / audioEl.duration * 100}%`;
-          }, 10);
-
-        } else {
-          audioEl.pause();
-          clearInterval(timerInterval);
-        }
-      })
-  }
-}
-
-playbuttons(); */
-
-//   let audioEl = elem.firstElementChild;
-//   progressBarPercentage.style.width = `songId`;
-//   elem.addEventListener("click", function () {
-
-//     if (audioEl.paused) {
-//       audioEl.play();
-//       timerInterval = setInterval(function () {
-//         progressBarPercentage.style.width = `${audioEl.currentTime / audioEl.duration * 100}%`;
-//       }, 10);
-
-//     } else {
-//       audioEl.pause();
-//       clearInterval(timerInterval);
-//     }
-//   })
-
-//   playButtonLeftEl.addEventListener("click", function () {
-
-//     if (audioEl.paused) {
-//       audioEl.play();
-//       timerInterval = setInterval(function () {
-//         progressBarPercentage.style.width = `${audioEl.currentTime / audioEl.duration * 100}%`;
-//       }, 10);
-
-//     } else {
-//       audioEl.pause();
-//       clearInterval(timerInterval);
-//     }
-//   })
-
-
-
-// }
-
-
-
-
-
-/* // PLAY ACTION
-
-// const playButtonRightEl = document.querySelector(".play__button__right");
-const playButtons = document.querySelectorAll(".play__button__right");
-
-// let chosenSong;
-let timerInterval;
-
-const play = () => {
-
-  for (let elem of playButtons) {
-
-
-    let audioEl = elem.firstElementChild;
-    progressBarPercentage.style.width = `songId`;
-    elem.addEventListener("click", function () {
-
-      if (audioEl.paused) {
-        audioEl.play();
-        timerInterval = setInterval(function () {
-          progressBarPercentage.style.width = `${audioEl.currentTime / audioEl.duration * 100}%`;
-        }, 10);
-
-      } else {
-        audioEl.pause();
-        clearInterval(timerInterval);
-      }
-    })
-
-    playButtonLeftEl.addEventListener("click", function () {
-
-      if (audioEl.paused) {
-        audioEl.play();
-        timerInterval = setInterval(function () {
-          progressBarPercentage.style.width = `${audioEl.currentTime / audioEl.duration * 100}%`;
-        }, 10);
-
-      } else {
-        audioEl.pause();
-        clearInterval(timerInterval);
-      }
-    })
-
-
-
-  }
-}
-
-play(); */
+// playlistArr[0].playModuleRender();
