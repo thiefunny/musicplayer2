@@ -1,55 +1,4 @@
-// Songs List
-
-const song = [{
-    "id": 1,
-    "url": "/music/morrowind.mp3",
-    "time": "30.021917",
-    "title": "Morrowind",
-    "artist": "Bethesda"
-  },
-  {
-    "id": 2,
-    "url": "/music/45 Piosenka dzieci z Bullerbyn.mp3",
-    "time": "68.647688",
-    "title": "Dzieci z Bullerbyn",
-    "artist": "Astrid Lingren"
-  },
-  {
-    "id": 3,
-    "url": "/music/Bocian bocian Ga Ga Ga.mp3",
-    "time": "353.16944",
-    "title": "Bocian Bocian Ga Ga Ga",
-    "artist": "Bocian team"
-  },
-  {
-    "id": 4,
-    "url": "/music/Bocian bocian Ga Ga Ga.mp3",
-    "time": "353.16944",
-    "title": "Bocian Bocian Ga Ga Ga",
-    "artist": "Bocian team"
-  },
-  {
-    "id": 5,
-    "url": "/music/morrowind.mp3",
-    "time": "30.021917",
-    "title": "Morrowind",
-    "artist": "Bethesda"
-  },
-  {
-    "id": 6,
-    "url": "/music/45 Piosenka dzieci z Bullerbyn.mp3",
-    "time": "68.647688",
-    "title": "Dzieci z Bullerbyn",
-    "artist": "Astrid Lingren"
-  },
-  {
-    "id": 7,
-    "url": "/music/Bocian bocian Ga Ga Ga.mp3",
-    "time": "353.16944",
-    "title": "Bocian Bocian Ga Ga Ga",
-    "artist": "Bocian team"
-  }
-]
+import {songsArr} from '/js/songs.js'
 
 // caching the DOM
 
@@ -63,10 +12,9 @@ const rightPanel = document.querySelector(".right__panel");
 const progressBarPercentage = document.querySelector(".progress__bar__percentage");
 const progressBar = document.querySelector(".progress__bar");
 
-
 // Objects and methods
 
-songsCounterEl.innerHTML = `${song.length} songs`;
+songsCounterEl.innerHTML = `${songsArr.length} songs`;
 
 // GENERATING PLAYER MODULE
 
