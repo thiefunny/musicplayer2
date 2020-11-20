@@ -17,11 +17,15 @@ songsCounterEl.innerHTML = `${songsArr.length} songs`;
 
 // Song module constructor
 
-function Module() {
+let moduleNumberReturned;
+let modulesArr = [];
+
+function Module(moduleId) {
 
   this.playModuleEl = document.createElement("div");
   this.audioEl = document.createElement("audio");
   this.timerInterval;
+  this.moduleNumber = moduleId + 1;
 
   this.playModuleRender = function (songId) {
 
@@ -59,13 +63,15 @@ function Module() {
     songDurationEl.innerHTML = `${songsArr[songId]["time"]}`
   };
 
-  this.chosen = false;
-
-  this.play = function (audioArg, timerArg) {
+  this.play = function (audioArg, timerArg, moduleArg) {
     this.playModuleEl.addEventListener("click",
       function () {
+        console.log(moduleArg);
         if (audioArg.paused) {
-          audioArg.play()
+          for (let elem of modulesArr) {
+            elem.audioEl.pause();
+          }
+          audioArg.play();
           timerArg = setInterval(function () {
             progressBarPercentage.style.width = `${audioArg.currentTime / audioArg.duration * 100}%`;
           }, 50);
@@ -73,6 +79,8 @@ function Module() {
           audioArg.pause();
           clearInterval(timerArg);
         }
+        moduleNumberReturned = moduleArg;
+        return moduleNumberReturned;
       }
     )
   }
@@ -81,11 +89,13 @@ function Module() {
 // Playlist (Song modules) generator
 
 for (let i = 0; i < songsArr.length; i++) {
-  let module = new Module();
+  let module = new Module(i);
+  modulesArr.push(module);
   module.playModuleRender(i);
-  module.play(module.audioEl, module.timerInterval);
+  module.play(module.audioEl, module.timerInterval, module.moduleNumber);
+  // console.log(modulesArr[i]);
 }
 
-playButtonLeftEl.addEventListener("click", function() {
-  
+playButtonLeftEl.addEventListener("click", function (moduleNumber) {
+
 })
