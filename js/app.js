@@ -25,7 +25,8 @@ function Module(moduleId) {
   this.playModuleEl = document.createElement("div");
   this.audioEl = document.createElement("audio");
   this.timerInterval;
-  this.moduleNumber = moduleId + 1;
+  this.moduleNumber = moduleId;
+
 }
 
 Module.prototype.playModuleRender = function (songId) {
@@ -67,27 +68,24 @@ Module.prototype.playModuleRender = function (songId) {
 Module.prototype.play = function (audioArg, timerArg, moduleArg) {
 
   this.playModuleEl.addEventListener("click",
-  function () {
-    console.log(moduleArg);
-    if (audioArg.paused) {
-      for (let elem of modulesArr) {
-        elem.audioEl.pause();
+    function () {
+      console.log(moduleArg);
+      if (audioArg.paused) {
+        for (let elem of modulesArr) {
+          elem.audioEl.pause();
+        }
+        audioArg.play();
+        timerArg = setInterval(function () {
+          progressBarPercentage.style.width = `${audioArg.currentTime / audioArg.duration * 100}%`;
+        }, 50);
+      } else {
+        audioArg.pause();
+        clearInterval(timerArg);
       }
-      audioArg.play();
-      timerArg = setInterval(function () {
-        progressBarPercentage.style.width = `${audioArg.currentTime / audioArg.duration * 100}%`;
-      }, 50);
-    } else {
-      audioArg.pause();
-      clearInterval(timerArg);
+      moduleNumberReturned = moduleArg;
+      return moduleNumberReturned;
     }
-    moduleNumberReturned = moduleArg;
-    return moduleNumberReturned;
-  }
-)
-
-
-
+  )
 }
 
 // Playlist (Song modules) generator
@@ -100,6 +98,8 @@ for (let i = 0; i < songsArr.length; i++) {
   // console.log(modulesArr[i]);
 }
 
-playButtonLeftEl.addEventListener("click", function (moduleNumber) {
-
-})
+// console.log(modulesArr[moduleNumberReturned].audioEl)
+playButtonLeftEl.onclick = function () {
+console.log("bzik")
+  modulesArr[moduleNumberReturned].play(modulesArr[moduleNumberReturned].audioEl, modulesArr[moduleNumberReturned].timerInterval, modulesArr[moduleNumberReturned].moduleNumber)
+}
